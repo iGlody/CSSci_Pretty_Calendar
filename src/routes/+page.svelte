@@ -1,7 +1,7 @@
 <script lang="ts">
     import { page } from '$app/stores';
 
-    // Access the filtered events from the server
+    // Use the $page store to access the data returned from the load function
     let events = $page.data.events;
     let error = $page.data.error;
 </script>

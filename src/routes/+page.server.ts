@@ -1,37 +1,21 @@
-import ical from 'ical.js';
+import { fetchAndFilterCalendar } from '$lib/calendarUtils';
 
 export async function load() {
-    const icalUrl = 'https://rooster.uva.nl/ical?66f12f8f&group=false&eu=MTUxMzk5MDVAdXZhLm5s&h=t6uR04Cywkn1uDMyfqO5oONEj8DKntnaD2mQdZ8YLko=';
-
     try {
-        const response = await fetch(icalUrl);
-        const calendarData = await response.text();
+        const filteredEvents = await fetchAndFilterCalendar();
 
-        // Parse the iCalendar data
-        const jcalData = ical.parse(calendarData);
-        const vcalendar = new ical.Component(jcalData);
-
-        // Extract and filter events
-        const events = vcalendar.getAllSubcomponents('vevent').filter((event) => {
-            const description = event.getFirstPropertyValue('description');
-            // Skip events with "Type: Self-study" in the description
-            return !description?.startsWith('Type: Self-study');
-        }).map((event) => {
-            // Return only necessary details for each event
-            return {
+        // Return the filtered events to the Svelte page
+        return {
+            events: filteredEvents.map(event => ({
                 summary: event.getFirstPropertyValue('summary'),
                 description: event.getFirstPropertyValue('description'),
-                start: event.getFirstPropertyValue('dtstart').toString(),
-                end: event.getFirstPropertyValue('dtend').toString(),
-            };
-        });
-
-        return {
-            events // Pass the filtered events to the client
+                start: event.getFirstPropertyValue('dtstart')?.toString() || '',
+                end: event.getFirstPropertyValue('dtend')?.toString() || '',
+            }))
         };
     } catch (error) {
         return {
-            error: 'Failed to fetch or process the calendar'
+            error: 'Failed to load calendar events'
         };
     }
 }
