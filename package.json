@@ -21,6 +21,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@sveltejs/adapter-vercel": "^5.4.4",
 		"axios": "^1.7.7",
 		"ical.js": "^2.1.0",
 		"icalendar": "^0.7.1",
