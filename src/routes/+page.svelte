@@ -4,6 +4,12 @@
     // Use the $page store to access the data returned from the load function
     let events = $page.data.events;
     let error = $page.data.error;
+
+    // Helper function to format date-time
+    function formatDate(dateStr: string) {
+        const date = new Date(dateStr);
+        return date.toLocaleString(); // Customize date formatting as needed
+    }
 </script>
 
 <main>
@@ -17,9 +23,54 @@
         <ul>
             {#each events as event}
                 <li>
-                    <strong>{event.summary}</strong><br>
-                    {event.description} <br>
-                    {event.start} - {event.end}
+                    <strong>{event.summary || 'No Title'}</strong><br>
+                    <em>{event.description || 'No Description'}</em><br>
+
+                    <!-- Date and time -->
+                    <div>
+                        <strong>Start:</strong> {formatDate(event.start)}<br>
+                        <strong>End:</strong> {formatDate(event.end)}<br>
+                    </div>
+
+                    <!-- Location -->
+                    {#if event.location}
+                        <div>
+                            <strong>Location:</strong> {event.location}
+                        </div>
+                    {/if}
+
+                    <!-- Organizer -->
+                    {#if event.organizer}
+                        <div>
+                            <strong>Organizer:</strong> {event.organizer}
+                        </div>
+                    {/if}
+
+                    <!-- Attendees -->
+                    {#if event.attendees && event.attendees.length > 0}
+                        <div>
+                            <strong>Attendees:</strong>
+                            <ul>
+                                {#each event.attendees as attendee}
+                                    <li>{attendee}</li>
+                                {/each}
+                            </ul>
+                        </div>
+                    {/if}
+
+                    <!-- Status -->
+                    {#if event.status}
+                        <div>
+                            <strong>Status:</strong> {event.status}
+                        </div>
+                    {/if}
+
+                    <!-- Recurrence (if applicable) -->
+                    {#if event.rrule}
+                        <div>
+                            <strong>Recurs:</strong> {event.rrule}
+                        </div>
+                    {/if}
                 </li>
             {/each}
         </ul>

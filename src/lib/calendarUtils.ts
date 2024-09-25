@@ -19,17 +19,34 @@ export async function fetchAndFilterCalendar() {
             const description = event.getFirstPropertyValue('description');
             return typeof description === 'string' && !description.startsWith('Type: Self-study');
         }).map((event) => {
-            const summary = event.getFirstPropertyValue('summary');
+            let summary = event.getFirstPropertyValue('summary');
             const description = event.getFirstPropertyValue('description');
+            const location = event.getFirstPropertyValue('location');
 
             // Modify the summary if it's the specific event
             if (summary === 'FOUNDATION: Appreciating the complexity of social challenges' && description) {
                 const typeMatch = description.match(/Type:\s*(.*)/);
                 if (typeMatch && typeMatch[1]) {
-                    event.updatePropertyWithValue('summary', typeMatch[1].trim()); // Replace the summary with the extracted type
+                    // Replace the summary with the extracted type
+                    summary = typeMatch[1].trim();
                 }
             }
 
+            // Extract location if it starts with "REC "
+            let extractedLocation = '';
+            if (location && location.startsWith('REC ')) {
+                extractedLocation = location.slice(4); // Take everything after "REC "
+            }
+
+            // If a location was extracted, append it to the summary
+            if (extractedLocation) {
+                summary += ` (${extractedLocation})`; // Append the extracted location to the summary
+            }
+
+            // Update the event with the new summary
+            event.updatePropertyWithValue('summary', summary);
+
+            // Return the full event, preserving all properties
             return event;
         });
 
