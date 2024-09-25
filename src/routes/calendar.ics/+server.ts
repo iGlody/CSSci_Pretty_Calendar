@@ -24,15 +24,12 @@ export async function GET() {
         // Fetch the calendar data
         const response = await fetch(icalUrl);
 
-        // Log the status and response
         console.log(`Fetched calendar from ${icalUrl}, Status: ${response.status}`);
         if (!response.ok) {
             throw new Error(`Failed to fetch calendar data, status: ${response.status}`);
         }
 
         const calendarData = await response.text();
-
-        // Log the fetched calendar data (first 500 chars)
         console.log(`Calendar data: ${calendarData.slice(0, 500)}`);
 
         // Parse the calendar data
@@ -44,20 +41,30 @@ export async function GET() {
             const description = event.getFirstPropertyValue('description');
             return typeof description === 'string' && !description.startsWith('Type: Self-study');
         }).map((event) => {
+            let summary = event.getFirstPropertyValue('summary');
+            const description = event.getFirstPropertyValue('description');
+
+            // Check if the summary is "FOUNDATION: Appreciating the complexity of social challenges"
+            if (summary === 'FOUNDATION: Appreciating the complexity of social challenges' && description) {
+                // Find "Type: " in the description and extract the value after it
+                const typeMatch = description.match(/Type:\s*(.*)/);
+                if (typeMatch && typeMatch[1]) {
+                    summary = typeMatch[1].trim(); // Set summary to the type (e.g., Lecture)
+                }
+            }
+
             return {
-                summary: event.getFirstPropertyValue('summary'),
-                description: event.getFirstPropertyValue('description'),
+                summary,
+                description,
                 start: event.getFirstPropertyValue('dtstart')?.toString() || '',
                 end: event.getFirstPropertyValue('dtend')?.toString() || '',
             };
         });
 
-        console.log(`Filtered events: ${JSON.stringify(events, null, 2)}`);
+        console.log(`Filtered and modified events: ${JSON.stringify(events, null, 2)}`);
 
         // Generate the ICS file
         const icsData = generateIcs(events);
-
-        // Log ICS file generation
         console.log('ICS file generated successfully');
 
         return new Response(icsData, {
