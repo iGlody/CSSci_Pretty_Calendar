@@ -2,7 +2,7 @@
     "crons": [
       {
         "path": "/api/reloadCalendars",
-        "schedule": "*/30 * * * *"
+        "schedule": "0 0 * * *"
       }
     ]
   }
