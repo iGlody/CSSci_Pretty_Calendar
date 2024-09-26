@@ -1,8 +1,6 @@
 import ical from 'ical.js';
 
-export async function fetchAndFilterCalendar() {
-    const icalUrl = 'https://rooster.uva.nl/ical?66f12f8f&group=false&eu=MTUxMzk5MDVAdXZhLm5s&h=t6uR04Cywkn1uDMyfqO5oONEj8DKntnaD2mQdZ8YLko=';
-
+export async function fetchAndFilterCalendar(icalUrl: string) {
     try {
         const response = await fetch(icalUrl);
 
