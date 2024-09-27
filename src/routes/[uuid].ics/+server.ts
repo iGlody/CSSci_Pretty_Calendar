@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { modifyIcsData } from '$lib/icalUtils'; // Import the modification function
 
 // Use environment variables for Supabase
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -19,11 +20,18 @@ export async function GET({ params }) {
         return new Response('Calendar not found', { status: 404 });
     }
 
-    // Serve the calendar data as an .ics file
-    return new Response(data.calendar_data, {
-        headers: {
-            'Content-Type': 'text/calendar',
-            'Content-Disposition': `attachment; filename="${uuid}.ics"`,
-        },
-    });
+    try {
+        // Modify the calendar data using the function that works directly on the iCal string
+        const modifiedIcsData = modifyIcsData(data.calendar_data);
+
+        // Serve the modified calendar data as an .ics file
+        return new Response(modifiedIcsData, {
+            headers: {
+                'Content-Type': 'text/calendar',
+                'Content-Disposition': `attachment; filename="${uuid}.ics"`,
+            },
+        });
+    } catch (error) {
+        return new Response(`Error processing calendar: ${error.message}`, { status: 500 });
+    }
 }
