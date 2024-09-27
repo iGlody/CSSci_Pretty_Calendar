@@ -56,16 +56,23 @@ export async function fetchAndFilterCalendar(icalUrl: string) {
     }
 }
 
-// Function to generate ICS data from filtered events
-export function generateIcs(events: any[]) {
+// Function to generate ICS data from filtered events and the original calendar
+export function generateIcs(events: any[], originalVcalendar: any) {
+    // Create a new vcalendar component to hold the filtered events
     const vcalendar = new ical.Component(['vcalendar', [], []]);
     vcalendar.updatePropertyWithValue('prodid', '-//Your App//Calendar//EN');
     vcalendar.updatePropertyWithValue('version', '2.0');
 
-    // Add filtered events back to the new calendar
+    // Copy over all non-event properties (e.g., prodid, version, etc.) from the original calendar
+    //originalVcalendar.getAllProperties().forEach((prop) => {
+    //    vcalendar.addProperty(prop); // Add each property to the new calendar
+    //});
+
+    // Add the filtered events back into the new calendar
     events.forEach((event) => {
-        vcalendar.addSubcomponent(event);
+        vcalendar.addSubcomponent(event); // Add each filtered event
     });
 
+    // Return the new ICS calendar as a string
     return vcalendar.toString();
 }

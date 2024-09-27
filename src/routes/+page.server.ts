@@ -1,4 +1,4 @@
-import { fetchAndFilterCalendar } from '$lib/calendarUtils';
+import { fetchAndFilterCalendar, generateIcs } from '$lib/calendarUtils'; // Import generateIcs
 import { getSubscriptionLinkByCalendarUrl, insertCalendar } from '$lib/dbHelpers';
 import crypto from 'crypto';
 import ical from 'ical.js';
@@ -24,45 +24,23 @@ export const actions = {
                     subscriptionLink,
                 };
             } else {
-                // Generate a new subscription link and insert the new calendar
+                // Generate a new subscription link
                 const uuid = crypto.randomUUID();
                 const newSubscriptionLink = `/${uuid}.ics`;
 
-                // Fetch and filter the calendar data
+                // Fetch and filter the calendar events
                 const filteredEvents = await fetchAndFilterCalendar(calendarUrl);
 
-                // Create an ICS file using ical.js
-                const vcalendar = new ical.Component(['vcalendar', [], []]);
-                vcalendar.updatePropertyWithValue('prodid', '-//Your App//Calendar//EN');
-                vcalendar.updatePropertyWithValue('version', '2.0');
+                // Fetch the original calendar to preserve its metadata (e.g., prodid, version)
+                const originalResponse = await fetch(calendarUrl);
+                const originalData = await originalResponse.text();
+                const originalJcalData = ical.parse(originalData);
+                const originalVcalendar = new ical.Component(originalJcalData); // Get the original vcalendar component
 
-                // Add filtered events to the calendar
-                filteredEvents.forEach(event => {
-                    const vevent = new ical.Component('vevent');
-                    vevent.updatePropertyWithValue('summary', event.getFirstPropertyValue('summary'));
-                    vevent.updatePropertyWithValue('description', event.getFirstPropertyValue('description'));
-                    vevent.updatePropertyWithValue('dtstart', event.getFirstPropertyValue('dtstart'));
-                    vevent.updatePropertyWithValue('dtend', event.getFirstPropertyValue('dtend'));
-                    vevent.updatePropertyWithValue('location', event.getFirstPropertyValue('location'));
-                    vevent.updatePropertyWithValue('organizer', event.getFirstPropertyValue('organizer'));
+                // Generate the ICS file using the filtered events and original vcalendar
+                const calendarData = generateIcs(filteredEvents, originalVcalendar);
 
-                    // Add attendees, status, rrule, etc.
-                    const attendees = event.getAllProperties('attendee');
-                    attendees.forEach(attendee => {
-                        vevent.addProperty(attendee);
-                    });
-
-                    vevent.updatePropertyWithValue('status', event.getFirstPropertyValue('status'));
-                    vevent.updatePropertyWithValue('rrule', event.getFirstPropertyValue('rrule'));
-
-                    // Add the event to the calendar
-                    vcalendar.addSubcomponent(vevent);
-                });
-
-                // Convert the calendar to ICS format
-                const calendarData = vcalendar.toString();
-
-                // Insert the new calendar into the database (as ICS)
+                // Insert the new calendar into the database
                 await insertCalendar(calendarUrl, newSubscriptionLink, calendarData);
 
                 console.log(`Inserted new calendar with subscription link: ${newSubscriptionLink}`);
