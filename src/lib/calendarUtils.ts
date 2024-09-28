@@ -62,7 +62,7 @@ export function generateIcs(events: any[], originalVcalendar: any) {
     const vcalendar = new ical.Component(['vcalendar', [], []]);
     vcalendar.updatePropertyWithValue('prodid', '-//Your App//Calendar//EN');
     vcalendar.updatePropertyWithValue('version', '2.0');
-    vcalendar.updatePropertyWithValue('X-WR-CALNAME', `Pretty Calendar by Lukas`); 
+    vcalendar.updatePropertyWithValue('X-WR-CALNAME', `CSSci Calendar by Lukas`); 
 
     // Copy over all non-event properties (e.g., prodid, version, etc.) from the original calendar
     //originalVcalendar.getAllProperties().forEach((prop) => {
