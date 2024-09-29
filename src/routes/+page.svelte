@@ -1,5 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
+	import { fade } from 'svelte/transition';
+    import { slide } from `svelte/transition`;
 
     import oldCal from '$lib/img/old_small.png?enhanced';
     import newCal from '$lib/img/new_small.png?enhanced';
@@ -25,7 +27,7 @@
             
             setTimeout(() => {
                 paused = false;
-                interval = setInterval(autoSwitchCalendar, 2000); // Resume automatic switching after 3 seconds
+                interval = setInterval(autoSwitchCalendar, 3000); // Resume automatic switching after 3 seconds
             }, 3000);
         }
     }
@@ -37,7 +39,7 @@
 
     // Automatically switch images every 2 seconds
     onMount(() => {
-        interval = setInterval(autoSwitchCalendar, 2000);
+        interval = setInterval(autoSwitchCalendar, 3000);
 
         return () => clearInterval(interval); // Cleanup interval on component destroy
     });
@@ -89,12 +91,12 @@
 </script>
 
 <div class="hero bg-base-100 h-dvh">
-    <div class="hero-content flex justify-center gap-12">
+    <div class="hero-content flex justify-center gap-12 flex-wrap">
         <div class="flex flex-col gap-4 w-80">
             <h1 class="text-3xl font-bold">Pretty Calendar CSSci</h1>
             <form on:submit={submitCalendar} class="flex gap-4">
                 <input class="input input-bordered w-full max-w-md"  bind:value={calendarUrl} placeholder="Enter Calendar URL" required>
-                <button class="btn btn-primary" type="submit">Submit</button>
+                <button class="btn btn-accent" type="submit">Submit</button>
             </form>
 
             {#if loading}
@@ -109,21 +111,22 @@
             {/if}
         
             {#if fullSubscriptionLink}
-            <div class="flex flex-col text-center">
+            <div class="flex flex-col text-center" transition:fade>
                 <p>Your subscription link: </p>
-                <p class="font-bold text-black text-sm max-w-80">{fullSubscriptionLink}</p>
+                <p class="font-bold text-white text-sm max-w-80">{fullSubscriptionLink}</p>
             </div>
-            <button class="btn btn-shadow btn-sm" on:click={clipboardCopy}>Copy Link</button>
+            <button class="btn btn-shadow btn-sm" on:click={clipboardCopy} transition:fade>Copy Link</button>
             {/if}
         </div>
         <div class="flex flex-col gap-2">
             <div class="flex justify-center join max-w-md">
                 <button class="join-item btn btn-sm btn-outline"
-                class:btn-accent={!showNewCal}
+                class:btn-error={!showNewCal}
                 class:btn-outline={showNewCal}
+                transition:slide
                 on:click={() => manualSwitchCalendar(false)}>Old</button>
                 <button class="join-item btn btn-sm btn-outline"
-                class:btn-primary={showNewCal}
+                class:btn-accent={showNewCal}
                 class:btn-outline={!showNewCal}                
                 on:click={() => manualSwitchCalendar(true)}>New</button>
             </div>
