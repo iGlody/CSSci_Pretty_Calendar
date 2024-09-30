@@ -31,7 +31,7 @@
           on:click={showTutorial}
         >
           {#if !showTut}
-            Show Tutorial
+            How to Use?
           {:else}
             Show Example
           {/if}

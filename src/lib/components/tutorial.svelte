@@ -1,8 +1,10 @@
 <ul class="steps steps-vertical text-md w-full w-lg">
   <li class="step step-primary w-full">
     <span class="">
-      Go to <a href="https://rooster.uva.nl/schedule" class="text-accent"
-        >Rooster UVA.</a
+      Go to <a
+        href="https://rooster.uva.nl/schedule"
+        target="_blank"
+        class="text-accent">Rooster UVA.</a
       >
     </span>
   </li>
@@ -24,6 +26,6 @@
     After submitting, you will receive a new subscription link.
   </li>
   <li class="step step-primary">
-    Copy this new link and open your preferred calendar app
+    Copy this new link and use it in your preferred calendar app
   </li>
 </ul>
