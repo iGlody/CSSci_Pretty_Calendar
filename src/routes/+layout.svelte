@@ -4,7 +4,7 @@
   import ShowCase from "$lib/components/showCase.svelte";
   import Tutorial from "$lib/components/tutorial.svelte";
 
-  let showTut = false;
+  let showTut = true;
 
   // Function to automatically toggle between images
   function showTutorial() {
@@ -31,7 +31,7 @@
           on:click={showTutorial}
         >
           {#if !showTut}
-            How to Use?
+            How to set up the caledar?
           {:else}
             Show Example
           {/if}
