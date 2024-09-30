@@ -18,14 +18,14 @@
       <slot />
     </div>
     <div>
-      {#if showTut}
+      {#if !showTut}
         <ShowCase />
       {:else}
         <Tutorial />
       {/if}
       <div class="mt-8 flex justify-center">
         <button class="btn btn-primary btn-sm" on:click={showTutorial}>
-          {#if showTut}
+          {#if !showTut}
             Show Tutorial
           {:else}
             Show Example
