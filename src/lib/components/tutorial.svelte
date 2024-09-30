@@ -14,15 +14,22 @@
     }
   }
 
-  onMount(() => {
-    interval = setInterval(addCount, 2000);
+  function setCount(value: number) {
+    count.set(value); // Set the count based on hover
+  }
 
-    return () => clearInterval(interval); // Cleanup interval on component destroy
+  onMount(() => {
+    //interval = setInterval(addCount, 2000);
+    //return () => clearInterval(interval); // Cleanup interval on component destroy
   });
 </script>
 
 <ul class="steps steps-vertical text-md w-full w-lg">
-  <li class="step text-left" class:step-primary={$count > 0}>
+  <li
+    class="step text-left hover:font-bold"
+    class:step-primary={$count > 0}
+    on:mouseenter={() => setCount(1)}
+  >
     <span class="">
       Go to <a
         href="https://rooster.uva.nl/schedule"
@@ -31,24 +38,48 @@
       >
     </span>
   </li>
-  <li class="step text-left" class:step-primary={$count > 1}>
+  <li
+    class="step text-left hover:font-bold"
+    class:step-primary={$count > 1}
+    on:mouseenter={() => setCount(2)}
+  >
     <span>
       In the top-right corner, click on the Connect Calendar feature.
     </span>
   </li>
-  <li class="step text-left" class:step-primary={$count > 2}>
+  <li
+    class="step text-left hover:font-bold"
+    class:step-primary={$count > 2}
+    on:mouseenter={() => setCount(3)}
+  >
     Click Nest and copy the provided subscription link
   </li>
-  <li class="step text-left" class:step-primary={$count > 3}>
+  <li
+    class="step text-left hover:font-bold"
+    class:step-primary={$count > 3}
+    on:mouseenter={() => setCount(4)}
+  >
     Paste the calendar subscription link you copied
   </li>
-  <li class="step text-left" class:step-primary={$count > 4}>
+  <li
+    class="step text-left hover:font-bold"
+    class:step-primary={$count > 4}
+    on:mouseenter={() => setCount(5)}
+  >
     Click Submit to generate a new, filtered calendar link.
   </li>
-  <li class="step text-left" class:step-primary={$count > 5}>
+  <li
+    class="step text-left hover:font-bold"
+    class:step-primary={$count > 5}
+    on:mouseenter={() => setCount(6)}
+  >
     After submitting, you will receive a new subscription link.
   </li>
-  <li class="step text-left" class:step-primary={$count > 6}>
+  <li
+    class="step text-left hover:font-bold"
+    class:step-primary={$count > 6}
+    on:mouseenter={() => setCount(7)}
+  >
     Copy this new link and use it in your preferred calendar app
   </li>
 </ul>

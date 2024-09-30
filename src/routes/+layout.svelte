@@ -4,7 +4,7 @@
   import ShowCase from "$lib/components/showCase.svelte";
   import Tutorial from "$lib/components/tutorial.svelte";
 
-  let showTut = true;
+  let showTut = false;
 
   // Function to automatically toggle between images
   function showTutorial() {
