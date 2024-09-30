@@ -1,30 +1,29 @@
-<ul class="steps steps-vertical text-lg font-bold w-full max-w-lg">
-  <li class="step step-primary">
-    <span
-      >Go to <a href="https://rooster.uva.nl/schedule" class="text-accent"
+<ul class="steps steps-vertical text-md w-full w-lg">
+  <li class="step step-primary w-full">
+    <span class="">
+      Go to <a href="https://rooster.uva.nl/schedule" class="text-accent"
         >Rooster UVA.</a
-      ></span
-    >
+      >
+    </span>
+  </li>
+  <li class="step step-primary text-left">
+    <span>
+      In the top-right corner, click on the Connect Calendar feature.
+    </span>
+  </li>
+  <li class="step step-primary text-left">
+    Click Nest and copy the provided subscription link
   </li>
   <li class="step step-primary">
-    In the top-right corner, click on the Connect Calendar feature.
-  </li>
-  <li class="step step-primary">
-    Choose the calendar you want to subscribe to and copy the provided
-    subscription link
-  </li>
-  <li class="step step-primary">
-    Paste the calendar subscription link you copied from Rooster into the input
-    field on this page.
+    Paste the calendar subscription link you copied
   </li>
   <li class="step step-primary">
     Click Submit to generate a new, filtered calendar link.
   </li>
   <li class="step step-primary">
-    After submitting, you will receive a new calendar subscription link.
+    After submitting, you will receive a new subscription link.
   </li>
   <li class="step step-primary">
-    Copy this new link and open your preferred calendar app (Google Calendar,
-    Apple Calendar, etc.).
+    Copy this new link and open your preferred calendar app
   </li>
 </ul>

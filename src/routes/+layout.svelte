@@ -23,8 +23,13 @@
       {:else}
         <Tutorial />
       {/if}
-      <div class="mt-8 flex justify-center">
-        <button class="btn btn-primary btn-sm" on:click={showTutorial}>
+      <div class="mt-6 flex justify-center">
+        <button
+          class="btn btn-sm"
+          class:btn-accent={showTut}
+          class:btn-primary={!showTut}
+          on:click={showTutorial}
+        >
           {#if !showTut}
             Show Tutorial
           {:else}

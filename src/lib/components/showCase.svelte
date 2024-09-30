@@ -41,8 +41,8 @@
 
 </script>
 
-<div class="flex flex-col gap-2">
-  <div class="flex justify-center join max-w-md">
+<div class="flex flex-col">
+  <div class="flex justify-center join max-w-md mb-6">
     <button
       class="join-item btn btn-sm btn-outline"
       class:btn-error={!showNewCal}
