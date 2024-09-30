@@ -52,7 +52,7 @@
     class:step-primary={$count > 2}
     on:mouseenter={() => setCount(3)}
   >
-    Click Nest and copy the provided subscription link
+    Click Next and copy the provided subscription link
   </li>
   <li
     class="step text-left hover:font-bold"

@@ -56,9 +56,9 @@
   <!-- Image container with fixed position for both images -->
   <div class="relative max-w-md shadow-lg w-full">
     {#if showNewCal}
-      <enhanced:img src={newCal} alt="New Calendar" />
+      <enhanced:img src={newCal} alt="" />
     {:else}
-      <enhanced:img src={oldCal} alt="Old Calendar" />
+      <enhanced:img src={oldCal} alt="" />
     {/if}
   </div>
 </div>
