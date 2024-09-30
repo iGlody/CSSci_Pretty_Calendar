@@ -31,7 +31,7 @@
           on:click={showTutorial}
         >
           {#if !showTut}
-            How to set up the caledar?
+            How to set up the calendar?
           {:else}
             Show Example
           {/if}
