@@ -18,12 +18,7 @@
       <slot />
     </div>
     <div>
-      {#if !showTut}
-        <ShowCase />
-      {:else}
-        <Tutorial />
-      {/if}
-      <div class="mt-6 flex justify-center">
+      <div class="mb-6 flex justify-center">
         <button
           class="btn btn-sm"
           class:btn-accent={showTut}
@@ -37,6 +32,11 @@
           {/if}
         </button>
       </div>
+      {#if !showTut}
+        <ShowCase />
+      {:else}
+        <Tutorial />
+      {/if}
     </div>
   </div>
 </div>

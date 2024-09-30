@@ -39,7 +39,15 @@
 </script>
 
 <div class="flex flex-col">
-  <div class="flex justify-center join max-w-md mb-6">
+  <!-- Image container with fixed position for both images -->
+  <div class="relative max-w-md shadow-lg w-full">
+    {#if showNewCal}
+      <enhanced:img src={newCal} alt="" />
+    {:else}
+      <enhanced:img src={oldCal} alt="" />
+    {/if}
+  </div>
+  <div class="flex justify-center join max-w-md mt-6">
     <button
       class="join-item btn btn-sm btn-outline"
       class:btn-error={!showNewCal}
@@ -52,13 +60,5 @@
       class:btn-outline={!showNewCal}
       on:click={() => manualSwitchCalendar(true)}>New</button
     >
-  </div>
-  <!-- Image container with fixed position for both images -->
-  <div class="relative max-w-md shadow-lg w-full">
-    {#if showNewCal}
-      <enhanced:img src={newCal} alt="" />
-    {:else}
-      <enhanced:img src={oldCal} alt="" />
-    {/if}
   </div>
 </div>
