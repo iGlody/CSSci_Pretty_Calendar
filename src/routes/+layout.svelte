@@ -1,6 +1,6 @@
 <script>
   import "../app.css";
-
+  import { onMount } from "svelte";
   import ShowCase from "$lib/components/showCase.svelte";
   import Tutorial from "$lib/components/tutorial.svelte";
 
@@ -9,13 +9,14 @@
 
   let showTut = false;
 
-  // Inject analytics
-  inject({ mode: dev ? "development" : "production" });
-
   // Function to automatically toggle between images
   function showTutorial() {
     showTut = !showTut;
   }
+
+  onMount(() => {
+    inject({ mode: dev ? "development" : "production" });
+  });
 </script>
 
 <div class="hero w-full h-dvh">
