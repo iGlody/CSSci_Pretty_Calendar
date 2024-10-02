@@ -1,24 +1,22 @@
-import { fetchAndFilterCalendar } from '$lib/calendarUtils';
+import { fetchAndFilterCalendar, generateIcs } from '$lib/calendarUtils';
 import { getAllCalendars, updateCalendarData } from '$lib/dbHelpers';
+import ical from 'ical.js';
 
 export async function POST() {
     try {
         const calendars = await getAllCalendars(); // Retrieve all calendars from the database
+
         for (const calendar of calendars) {
             const filteredEvents = await fetchAndFilterCalendar(calendar.calendar_url);
-            const calendarData = JSON.stringify(
-                filteredEvents.map(event => ({
-                    summary: event.getFirstPropertyValue('summary'),
-                    description: event.getFirstPropertyValue('description'),
-                    start: event.getFirstPropertyValue('dtstart')?.toString() || '',
-                    end: event.getFirstPropertyValue('dtend')?.toString() || '',
-                    location: event.getFirstPropertyValue('location') || null,
-                    organizer: event.getFirstPropertyValue('organizer') || null,
-                    attendees: event.getAllProperties('attendee').map(att => att.getFirstValue()) || [],
-                    status: event.getFirstPropertyValue('status') || null,
-                    rrule: event.getFirstPropertyValue('rrule') || null
-                }))
-            );
+            
+            // Fetch the original calendar to preserve its metadata (e.g., prodid, version)
+            const originalResponse = await fetch(calendar.calendar_url);
+            const originalData = await originalResponse.text();
+            const originalJcalData = ical.parse(originalData);
+            const originalVcalendar = new ical.Component(originalJcalData);
+
+            // Generate the ICS file using the filtered events and original vcalendar
+            const calendarData = generateIcs(filteredEvents, originalVcalendar);
 
             // Update the calendar data in the database
             await updateCalendarData(calendar.id, calendarData);

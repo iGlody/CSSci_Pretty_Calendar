@@ -24,7 +24,7 @@ export async function getSubscriptionLinkByCalendarUrl(calendarUrl: string) {
 export async function insertCalendar(calendarUrl: string, subscriptionLink: string, calendarData: string) {
     const { error } = await supabase
         .from('calendars')
-        .insert([{ calendar_url: calendarUrl, subscription_link: subscriptionLink, calendar_data: calendarData }]);
+        .insert([{ calendar_url: calendarUrl, subscription_link: subscriptionLink, calendar_data: calendarData, last_updated: new Date().toISOString() }]);
 
     if (error) {
         throw new Error('Error inserting into database');
@@ -53,5 +53,12 @@ export async function updateCalendarData(calendarId: string, calendarData: strin
 
     if (error) {
         throw new Error('Error updating calendar data');
+    } else {
+        console.log(`Calendar ${calendarId} updated`);
+
+        const { data, error } = await supabase
+            .from('calendars')
+            .update({ last_updated: new Date().toISOString() }) // Set to current timestamp
+            .eq('id', calendarId);
     }
 }
