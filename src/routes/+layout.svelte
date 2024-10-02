@@ -4,7 +4,13 @@
   import ShowCase from "$lib/components/showCase.svelte";
   import Tutorial from "$lib/components/tutorial.svelte";
 
+  import { inject } from "@vercel/analytics";
+  import { dev } from "$app/environment";
+
   let showTut = false;
+
+  // Inject analytics
+  inject({ mode: dev ? "development" : "production" });
 
   // Function to automatically toggle between images
   function showTutorial() {
