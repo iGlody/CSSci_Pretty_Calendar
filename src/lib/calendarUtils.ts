@@ -22,7 +22,7 @@ export async function fetchAndFilterCalendar(icalUrl: string) {
             const location = event.getFirstPropertyValue('location');
             // Modify the summary only if it is "FOUNDATION: Appreciating the complexity of social challenges"
             if (summary === 'FOUNDATION: Appreciating the complexity of social challenges' || summary === 'CONNECTIONS: Linking data for better interventions in health or mobility systems') {
-                const typeMatch = description ? description.match(/Type:\s*(.*)/) : null;
+                const typeMatch = typeof description === 'string' ? description.match(/Type:\s*(.*)/) : null;
                 if (typeMatch && typeMatch[1]) {
                     // Replace the summary with the extracted type
                     summary = typeMatch[1].trim();
