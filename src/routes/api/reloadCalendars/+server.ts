@@ -10,9 +10,9 @@ export async function POST({ url }) {
     const token = url.searchParams.get('token');
 
     // If the token is missing or incorrect, return a 403 Forbidden response
-    if (!token || token !== SECRET_TOKEN) {
-        return new Response('Unauthorized: Invalid or missing token', { status: 403 });
-    }
+    //if (!token || token !== SECRET_TOKEN) {
+    //  return new Response('Unauthorized: Invalid or missing token', { status: 407 });
+    //}
 
     // If token is valid, proceed with the calendar processing
     try {
