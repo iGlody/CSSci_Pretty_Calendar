@@ -1,10 +1,4 @@
 {
-    "crons": [
-      {
-        "path": "/api/reloadCalendars",
-        "schedule": "0 0 * * *"
-      }
-    ],
     "headers": [
       {
         "source": "/api/(.*)",
