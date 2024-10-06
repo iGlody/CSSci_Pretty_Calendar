@@ -2,6 +2,10 @@ import { fetchAndFilterCalendar, generateIcs } from '$lib/calendarUtils';
 import { getAllCalendars, updateCalendarData } from '$lib/dbHelpers';
 import ical from 'ical.js';
 
+export const config = {
+    csrf: false,
+};
+
 export async function POST() {
     try {
         const calendars = await getAllCalendars(); // Retrieve all calendars from the database
