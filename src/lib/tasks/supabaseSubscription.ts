@@ -1,3 +1,4 @@
+import { createClient } from '@supabase/supabase-js';
 import { fetchAndFilterCalendar, generateIcs } from '$lib/calendarUtils';
 import { updateCalendarData } from '$lib/dbHelpers';
 import ical from 'ical.js';
@@ -11,9 +12,8 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Function to set up Supabase Realtime subscription
 export async function setupSubscription() {
-    supabase
-      .from('calendar_tasks')
-      .on('INSERT', async (payload) => {
+    supabase.channel('public:calendar_tasks')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'calendar_tasks' }, async (payload) => {
         const calendar_url = payload.new.calendar_url;
 
         try {
