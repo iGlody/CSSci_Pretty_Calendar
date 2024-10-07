@@ -1,43 +1,30 @@
-import { fetchAndFilterCalendar, generateIcs } from '$lib/calendarUtils';
-import { getAllCalendars, updateCalendarData } from '$lib/dbHelpers';
-import ical from 'ical.js';
+import { getAllCalendars } from '$lib/dbHelpers';
 
-// Fetch the secret token from the environment variables
-const SECRET_TOKEN = process.env.RELOAD_CALENDARS_TOKEN;
+import { createClient } from '@supabase/supabase-js';
+
+// Use environment variables for Supabase
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function POST({ url }) {
-    // Check for the 'token' query parameter in the URL
-    const token = url.searchParams.get('token');
-
-    // If the token is missing or incorrect, return a 403 Forbidden response
-    //if (!token || token !== SECRET_TOKEN) {
-    //  return new Response('Unauthorized: Invalid or missing token', { status: 407 });
-    //}
-
-    // If token is valid, proceed with the calendar processing
     try {
         const calendars = await getAllCalendars(); // Retrieve all calendars from the database
 
+        // Enqueue tasks for each calendar
         for (const calendar of calendars) {
-            const filteredEvents = await fetchAndFilterCalendar(calendar.calendar_url);
-
-            // Fetch the original calendar to preserve its metadata (e.g., prodid, version)
-            const originalResponse = await fetch(calendar.calendar_url);
-            const originalData = await originalResponse.text();
-            const originalJcalData = ical.parse(originalData);
-            const originalVcalendar = new ical.Component(originalJcalData);
-
-            // Generate the ICS file using the filtered events and original vcalendar
-            const calendarData = generateIcs(filteredEvents, originalVcalendar);
-
-            // Update the calendar data in the database
-            await updateCalendarData(calendar.id, calendarData);
+            const { error } = await supabase
+                .from('calendar_tasks')
+                .insert({ calendar_url: calendar.calendar_url });
+            
+            if (error) {
+                console.error(`Failed to enqueue task for ${calendar.calendar_url}:`, error);
+            }
         }
 
-        // Return a success message when all calendars are processed
-        return new Response('All calendars reloaded and refiltered successfully', { status: 200 });
+        return new Response('Calendars enqueued for processing', { status: 200 });
     } catch (error) {
-        console.error('Error reloading calendars:', error);
-        return new Response('Failed to reload calendars', { status: 500 });
+        console.error('Error enqueuing calendar tasks:', error);
+        return new Response('Failed to enqueue calendar tasks', { status: 500 });
     }
 }
