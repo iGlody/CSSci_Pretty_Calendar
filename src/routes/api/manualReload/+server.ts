@@ -4,7 +4,7 @@ import ical from 'ical.js';
 
 // Fetch the secret token from the environment variables
 
-export async function POST({ url }) {
+export async function POST() {
 
     // If token is valid, proceed with the calendar processing
     try {

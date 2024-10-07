@@ -31,7 +31,7 @@ export async function setupSubscription() {
           const calendarData = generateIcs(filteredEvents, originalVcalendar);
 
           // Update the calendar data in your database
-          await updateCalendarData(payload.new.id, calendarData);
+          await updateCalendarData(payload.new.cal_id, calendarData);
 
           // Mark task as completed
           await supabase
