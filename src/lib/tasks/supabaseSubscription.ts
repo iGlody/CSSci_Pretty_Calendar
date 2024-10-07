@@ -1,4 +1,3 @@
-import { createClient } from '@supabase/supabase-js';
 import { fetchAndFilterCalendar, generateIcs } from '$lib/calendarUtils';
 import { updateCalendarData } from '$lib/dbHelpers';
 import ical from 'ical.js';
