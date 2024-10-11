@@ -45,9 +45,15 @@ export async function retryFailedTasks(batchSize = 10) {
                 await updateCalendarData(task.id, calendarData);
 
                 // Mark the task as completed
+                //await supabase
+                 //   .from('calendar_tasks')
+                 //   .update({ status: 'completed' })
+                 //   .eq('id', task.id);
+
+                // Delete completed tasks
                 await supabase
                     .from('calendar_tasks')
-                    .update({ status: 'completed' })
+                    .delete()
                     .eq('id', task.id);
 
                 console.log(`Successfully retried calendar task: ${task.calendar_url}`);
