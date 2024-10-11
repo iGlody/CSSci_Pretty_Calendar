@@ -39,7 +39,7 @@
     </span>
   </li>
   <li
-    class="step text-left hover:font-bold mr-2 hover:mr-0"
+    class="step text-left hover:font-bold mr-8 hover:mr-0"
     class:step-primary={$count > 1}
     on:mouseenter={() => setCount(2)}
   >
