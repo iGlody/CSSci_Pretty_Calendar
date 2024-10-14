@@ -35,12 +35,50 @@
       color: {
         value: "#2E2E2E",
       },
+      interactivity: {
+        detectsOn: "canvas",
+        events: {
+          onHover: {
+            enable: true,
+            mode: "bubble",
+          },
+          resize: true,
+        },
+        modes: {
+          bubble: {
+            distance: 80,
+            duration: 2,
+            opacity: 1,
+            size: 6,
+          },
+        },
+      },
       links: {
         enable: true,
         color: "#03A9F4",
       },
       move: {
         enable: true,
+        speed: 1,
+      },
+      size: {
+        value: 5,
+        random: {
+          enable: true,
+          minimumValue: 1,
+        },
+        animation: {
+          enable: false,
+          speed: 2.5,
+          minimumValue: 1,
+        },
+      },
+      opacity: {
+        value: 0.2,
+        random: {
+          enable: true,
+          minimumValue: 0.4,
+        },
       },
       number: {
         value: 100,
@@ -92,4 +130,20 @@
       {/if}
     </div>
   </div>
+  <footer
+    class="footer footer-center absolute text-base-content p-2 bottom-0 w-full text-xs"
+  >
+    <aside class="flex justify-between w-full">
+      <p>
+        Lukas Pesek - {new Date().getFullYear()}
+      </p>
+      <a
+        class="link"
+        href="https://github.com/iGlody/CSSci_Pretty_Calendar"
+        target="_blank"
+      >
+        Github
+      </a>
+    </aside>
+  </footer>
 </div>
