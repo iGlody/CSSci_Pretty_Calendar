@@ -34,10 +34,16 @@ export async function setupSubscription() {
           await updateCalendarData(payload.new.cal_id, calendarData);
 
           // Mark task as completed
+          //await supabase
+          //  .from('calendar_tasks')
+          //  .update({ status: 'completed' })
+          //  .eq('id', payload.new.id);
+
           await supabase
             .from('calendar_tasks')
-            .update({ status: 'completed' })
+            .delete()
             .eq('id', payload.new.id);
+
 
           console.log(`Successfully processed calendar: ${calendar_url}`);
         } catch (error) {
