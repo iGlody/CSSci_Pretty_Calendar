@@ -35,7 +35,9 @@ export async function fetchAndFilterCalendar(icalUrl: string) {
           summary ===
             "CONNECTIONS: Linking data for better interventions in health or mobility systems" ||
           summary ===
-            "BUILDING BLOCKS: Experimenting with digital interventions for behavioural change"
+            "BUILDING BLOCKS: Experimenting with digital interventions for behavioural change" ||
+          summary ===
+            "CAPSTONE: Making social change with digital innovations"
         ) {
           const typeMatch =
             typeof description === "string"
