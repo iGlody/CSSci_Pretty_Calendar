@@ -1,8 +1,8 @@
-import { fetchAndFilterCalendar, generateIcs } from '$lib/calendarUtils';
-import { updateCalendarData } from '$lib/dbHelpers';
-import ical from 'ical.js';
+import { fetchAndFilterCalendar, generateIcs } from "$lib/calendarUtils";
+import { updateCalendarData } from "$lib/dbHelpers";
+import ical from "ical.js";
 
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from "@supabase/supabase-js";
 
 // Use environment variables for Supabase
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -11,16 +11,20 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Function to set up Supabase Realtime subscription
 export async function setupSubscription() {
-    supabase.channel('public:calendar_tasks')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'calendar_tasks' }, async (payload) => {
+  supabase
+    .channel("public:calendar_tasks")
+    .on(
+      "postgres_changes",
+      { event: "INSERT", schema: "public", table: "calendar_tasks" },
+      async (payload) => {
         const calendar_url = payload.new.calendar_url;
 
         try {
           // Mark task as processing
           await supabase
-            .from('calendar_tasks')
-            .update({ status: 'processing' })
-            .eq('id', payload.new.id);
+            .from("calendar_tasks")
+            .update({ status: "processing" })
+            .eq("id", payload.new.id);
 
           // Fetch and process the calendar
           const filteredEvents = await fetchAndFilterCalendar(calendar_url);
@@ -40,10 +44,9 @@ export async function setupSubscription() {
           //  .eq('id', payload.new.id);
 
           await supabase
-            .from('calendar_tasks')
+            .from("calendar_tasks")
             .delete()
-            .eq('id', payload.new.id);
-
+            .eq("id", payload.new.id);
 
           console.log(`Successfully processed calendar: ${calendar_url}`);
         } catch (error) {
@@ -51,10 +54,24 @@ export async function setupSubscription() {
 
           // Mark task as failed
           await supabase
-            .from('calendar_tasks')
-            .update({ status: 'failed' })
-            .eq('id', payload.new.id);
+            .from("calendar_tasks")
+            .update({ status: "failed" })
+            .eq("id", payload.new.id);
+
+          // Mark task as failed
+          if (error instanceof Error) {
+            await supabase
+              .from("calendar_tasks")
+              .update({ error_type: error.message })
+              .eq("id", payload.new.id);
+          } else {
+            await supabase
+              .from("calendar_tasks")
+              .update({ error_type: "Unknown error" })
+              .eq("id", payload.new.id);
+          }
         }
-      })
-      .subscribe();
+      }
+    )
+    .subscribe();
 }
