@@ -23,7 +23,6 @@ export async function retryFailedTasks(batchSize = 10) {
       .limit(batchSize);
 
     if (error) {
-      a;
       console.error("Error fetching failed tasks:", error);
       return;
     }
