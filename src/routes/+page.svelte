@@ -54,7 +54,11 @@
 </script>
 
 <div class="flex flex-col gap-4 w-80">
-  <h1 class="text-3xl font-bold">Pretty Calendar CSSci</h1>
+  <div>
+    <h2 class="text-3xl font-bold">Pretty Calendar CSSci</h2>
+    <h2 class="text-end text-sm hover:text-secondary">Now supporting 3rd-year students!</h2>
+  </div>
+
   <form on:submit={submitCalendar} class="flex gap-4">
     <input
       class="input input-bordered w-full max-w-md"
