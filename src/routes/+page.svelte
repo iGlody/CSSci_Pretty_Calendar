@@ -1,11 +1,24 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
+  import { getCalendarCount } from '$lib/dbHelpers';
+  import { onMount } from "svelte";
 
   let calendarUrl = "";
   let subscriptionLink = "";
   let fullSubscriptionLink = ""; // Full URL including the current URL
   let error = "";
   let loading = false;
+  let calendarCount = 0;
+
+    // Function to get the count of calendars
+    async function fetchCalendarCount() {
+    try {
+      calendarCount = await getCalendarCount();
+    } catch (err) {
+      console.error('Error fetching calendar count:', err);
+      error = 'Failed to fetch calendar count';
+    }
+  }
 
   // Function to submit the calendar URL and fetch the subscription link
   async function submitCalendar(event: Event) {
@@ -51,10 +64,15 @@
       alert("No link available to copy.");
     }
   }
+
+  onMount(() => {
+    fetchCalendarCount();
+  });
 </script>
 
 <div class="flex flex-col gap-4 w-80">
   <div>
+    <p class="text-xs">Taking care of {calendarCount} calendars</p>
     <h2 class="text-3xl font-bold">Pretty Calendar CSSci</h2>
     <h2 class="text-end text-sm hover:text-secondary">Now supporting 3rd-year students!</h2>
   </div>
