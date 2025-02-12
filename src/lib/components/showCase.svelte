@@ -38,7 +38,7 @@
   });
 </script>
 
-<div class="flex flex-col px-8">
+<div class="flex flex-col px-8 w-full">
   <!-- Image container with fixed position for both images -->
   <div class="relative max-w-md shadow-lg w-full">
     {#if showNewCal}

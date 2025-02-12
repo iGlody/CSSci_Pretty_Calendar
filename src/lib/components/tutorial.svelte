@@ -24,7 +24,7 @@
   });
 </script>
 
-<ul class="steps steps-vertical text-sm sm:text-lg w-full">
+<ul class="steps steps-vertical sm:text-md w-full">
   <li
     class="step text-left hover:font-bold"
     class:step-primary={$count > 0}

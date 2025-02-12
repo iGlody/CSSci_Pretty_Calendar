@@ -70,11 +70,11 @@
   });
 </script>
 
-<div class="flex flex-col gap-4 w-80">
-  <div>
-    <p class="text-xs">Taking care of {calendarCount} calendars</p>
-    <h2 class="text-3xl font-bold">Pretty Calendar CSSci</h2>
-    <h2 class="text-end text-sm hover:text-secondary">Now supporting 3rd-year students!</h2>
+<div class="flex flex-col gap-4 w-92 backdrop-blur-sm p-1 backdrop-opacity-60 rounded-lg">
+  <div class="flex flex-col gap-1">
+    <p class="text-xs">Making life a bit more organized for +{calendarCount} students</p>
+    <h2 class="text-4xl font-bold">Pretty Calendar CSSci</h2>
+    <h2 class="text-end text-base hover:text-secondary">Now supporting 3rd-year students!</h2>
   </div>
 
   <form on:submit={submitCalendar} class="flex gap-4">

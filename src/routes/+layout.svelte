@@ -104,11 +104,11 @@
     options={particlesConfig}
     on:particlesLoaded={onParticlesLoaded}
   />
-  <div class="hero-content flex justify-center gap-12 flex-wrap">
-    <div>
+  <div class="hero-content flex flex-col lg:flex-row justify-center gap-12">
+    <div class="">
       <slot />
     </div>
-    <div>
+    <div class="max-w-xl  backdrop-blur-sm backdrop-opacity-60">
       <div class="mb-6 flex justify-center">
         <button
           class="btn btn-sm"
