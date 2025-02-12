@@ -8,7 +8,7 @@
   let fullSubscriptionLink = ""; // Full URL including the current URL
   let error = "";
   let loading = false;
-  let calendarCount = 0;
+  let calendarCount = 10;
 
     // Function to get the count of calendars
     async function fetchCalendarCount() {
@@ -87,9 +87,9 @@
     <button class="btn btn-accent" type="submit">Submit</button>
   </form>
 
-  {#if loading}
-    <div class="flex flex-col text-center">
-      <span class="loading loading-dots loading-lg"></span>
+  {#if 1}
+    <div class="flex flex-col text-center gap-2" transition:fade>
+      <span class="loading loading-dots loading-lg mx-auto"></span>
       <p class="text-md">Loading... Please wait for the subscription link.</p>
     </div>
   {/if}
