@@ -87,7 +87,7 @@
     <button class="btn btn-accent" type="submit">Submit</button>
   </form>
 
-  {#if 1}
+  {#if loading}
     <div class="flex flex-col text-center gap-2" transition:fade>
       <span class="loading loading-dots loading-lg mx-auto"></span>
       <p class="text-md">Loading... Please wait for the subscription link.</p>
