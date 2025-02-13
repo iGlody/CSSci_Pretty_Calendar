@@ -147,3 +147,58 @@
     </aside>
   </footer>
 </div>
+
+
+<style>
+	.hide {
+		transform: translateY(-100%);
+	}
+
+	.show {
+		transform: translateY(0%);
+	}
+
+	@keyframes -global-from-bottom {
+		0% {
+			transform: translateY(10vw);
+			opacity: 0;
+		}
+		50% {
+			opacity: 0;
+		}
+		75% {
+			opacity: 0.5;
+		}
+		100% {
+			transform: translateY(0);
+			opacity: 1;
+		}
+	}
+
+	@keyframes -global-from-right {
+		0% {
+			transform: translateX(100vw);
+			opacity: 0;
+		}
+		50% {
+			opacity: 0;
+		}
+		75% {
+			opacity: 0.5;
+		}
+		100% {
+			transform: translateX(0);
+			opacity: 1;
+		}
+	}
+	@keyframes -global-from-left {
+		0% {
+			transform: rotateX(50deg) translateX(-200vw) skewX(-50deg);
+			opacity: 1;
+		}
+		100% {
+			transform: rotateX(0deg) translateX(0) skewX(0deg);
+			opacity: 1;
+		}
+	}
+</style>
