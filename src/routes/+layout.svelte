@@ -138,7 +138,7 @@
         Lukas Pesek - {new Date().getFullYear()}
       </p>
       <a
-        class="link"
+        class="link hidden"
         href="https://github.com/iGlody/CSSci_Pretty_Calendar"
         target="_blank"
       >
