@@ -28,7 +28,7 @@ export async function fetchAndFilterCalendar(icalUrl: string) {
         let summary = event.getFirstPropertyValue("summary");
         const description = event.getFirstPropertyValue("description");
         const location = event.getFirstPropertyValue("location");
-        // Modify the summary only if it is "FOUNDATION: Appreciating the complexity of social challenges"
+        // Modify the summary only if it is "FOUNDATION: Appreciating the complexity of social challenges" or other summaries
         if (
           summary ===
             "FOUNDATION: Appreciating the complexity of social challenges" ||
@@ -64,6 +64,18 @@ export async function fetchAndFilterCalendar(icalUrl: string) {
           event.updatePropertyWithValue("summary", summary);
         }
 
+        // Post-process: remove leading "CRE MODxx" (e.g., MOD01, MOD02, MOD03...) from summaries like
+        // "CRE MOD01 Theory, Academic Skills (HC)" -> "Theory, Academic Skills (HC)"
+        if (typeof summary === "string") {
+          const cleanedSummary = summary
+            .replace(/^CRE MOD\d{2}\b[:\s-]*/i, "")
+            .trim();
+
+          if (cleanedSummary !== summary) {
+            event.updatePropertyWithValue("summary", cleanedSummary);
+          }
+        }
+
         // Return the full event, preserving all properties, and keeping original summary if it's not modified
         return event;
       });
@@ -81,7 +93,10 @@ export function generateIcs(events: any[], originalVcalendar: any) {
   const vcalendar = new ical.Component(["vcalendar", [], []]);
   vcalendar.updatePropertyWithValue("prodid", "-//Your App//Calendar//EN");
   vcalendar.updatePropertyWithValue("version", "2.0");
-  vcalendar.updatePropertyWithValue("X-WR-CALNAME", `CSSci Calendar by Lukas`);
+  vcalendar.updatePropertyWithValue(
+    "X-WR-CALNAME",
+    `Pretty Calendar by Lukas;)`
+  );
 
   // Copy over all non-event properties (e.g., prodid, version, etc.) from the original calendar
   //originalVcalendar.getAllProperties().forEach((prop) => {

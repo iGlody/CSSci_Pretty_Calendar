@@ -72,14 +72,14 @@
   });
 </script>
 
-<div class="flex flex-col gap-4 w-92 backdrop-blur-sm p-1 backdrop-opacity-60 rounded-lg">
+<div class="flex flex-col gap-4 w-96 backdrop-blur-sm p-1 backdrop-opacity-60 rounded-lg">
   <div class="flex flex-col gap-1">
     <Saos animation={"from-right 1s cubic-bezier(0.35, 0.5, 0.65, 0.95) both"}>
       <p class="text-xs">Making life a bit more organized for +{calendarCount} students</p>
     </Saos>
-    <h2 class="text-4xl font-bold">Pretty Calendar CSSci</h2>
+    <h2 class="text-4xl font-bold">Pretty Calendar</h2>
     <Saos animation={"from-left 1s cubic-bezier(0.35, 0.5, 0.65, 0.95) both"}>
-      <h2 class="text-end text-base">Now supporting 3rd-year students!</h2>
+      <h2 class="text-end text-xs">Now supporting both CSSci (UvA) and CreaTe (VU) courses</h2>
     </Saos>
   </div>
 

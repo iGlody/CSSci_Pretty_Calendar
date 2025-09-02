@@ -35,7 +35,11 @@
         href="https://rooster.uva.nl/schedule"
         target="_blank"
         class="text-accent">Rooster UVA.</a
-      >
+      > or <a
+      href="https://rooster.vu.nl/schedule"
+      target="_blank"
+      class="text-accent">Rooster VU.</a
+    > 
     </span>
   </li>
   <li
