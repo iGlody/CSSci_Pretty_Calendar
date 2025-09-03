@@ -66,6 +66,9 @@ export async function fetchAndFilterCalendar(icalUrl: string) {
 
         // Post-process: remove leading "CRE MODxx" (e.g., MOD01, MOD02, MOD03...) from summaries like
         // "CRE MOD01 Theory, Academic Skills (HC)" -> "Theory, Academic Skills (HC)"
+        // works only for CreaTe (VU) events
+        // TODO: separate the processing for UvA and VU events for better performance and less code
+        // maybe also use separate DBs for UvA and VU events
         if (typeof summary === "string") {
           const cleanedSummary = summary
             .replace(/^CRE MOD\d{2}\b[:\s-]*/i, "")
